@@ -20,7 +20,8 @@ const Layout = ({ children }: Props) => {
     query SiteTitleQuery {
       site {
         siteMetadata {
-          title
+          title,
+          description
         }
       }
     }
@@ -28,7 +29,7 @@ const Layout = ({ children }: Props) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <Header siteTitle={data.site.siteMetadata.description} />
       <div
         style={{
           margin: `0 auto`,
@@ -37,10 +38,12 @@ const Layout = ({ children }: Props) => {
         }}
       >
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <footer
+          style={{
+            marginTop: `50px`,
+          }}
+        >
+          © {new Date().getFullYear()}, {data.site.siteMetadata.title}
         </footer>
       </div>
     </>
