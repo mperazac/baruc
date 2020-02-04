@@ -11,7 +11,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="BARUC" />
-      <h3>Escriba su pecado:</h3>
+      <h3>Escribí tu pecado:</h3>
       <Selector />
     </Layout>
   )
