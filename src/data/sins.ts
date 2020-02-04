@@ -59,6 +59,7 @@ export const sins = [
   { value: 7, label: "Herir" },
   { value: 7, label: "Agraviar" },
   { value: 7, label: "Gritar" },
+  { value: 7, label: "Celos" },
   //
   { value: 8, label: "Infidelidad" },
   { value: 8, label: "Lujuria" },

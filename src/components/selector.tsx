@@ -35,6 +35,7 @@ const Selector: React.FunctionComponent<ISelectorProps> = props => {
 
   return (
     <>
+      <h3>Escribí tu pecado:</h3>
       <AsyncSelect
         cacheOptions
         loadOptions={loadOptions}
