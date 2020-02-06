@@ -9,7 +9,9 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
     <div className="mt-5">
       <h3>Contacta al autor</h3>
       <Formik
-        initialValues={{ nombre: "", mensaje: "", email: "" }}
+        initialValues={{
+          nombre: "", mensaje: "", email: "", "form-name": "Contacte al Autor",
+        }}
         validationSchema={Yup.object({
           nombre: Yup.string()
             .max(15, "Debe tener 25 caracteres o menos")
@@ -28,7 +30,13 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
           }, 400);
         }}
       >
-        <Form>
+        <Form
+          name="contact"
+          method="post"
+          data-netlify="true"
+          data-netlify-recaptcha="true"
+        >
+          <input type="hidden" name="form-name" value="Contacte al Autor" />
           <div className="form-group">
             <label htmlFor="nombre">Nombre completo:</label>
             <Field name="nombre" type="text" className="form-control" />
@@ -48,6 +56,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
             />
             <ErrorMessage name="mensaje" />
           </div>
+          <div data-netlify-recaptcha="true"></div>
           <button type="submit" className="btn btn-dark">
             Enviar
           </button>
