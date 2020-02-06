@@ -1,0 +1,18 @@
+.btn-baruc {
+  color: #fff;
+  background-color: #1f7a8c;
+  border-color: #1f7a8c;
+}
+
+.btn-baruc:hover {
+  color: #fff;
+  background-color: #32616b;
+  border-color: #32616b;
+}
+
+.contact-form {
+  margin-top: 5rem;
+  background-color: #022b3a;
+  padding: 20px;
+  color: #fff;
+}

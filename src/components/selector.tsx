@@ -5,11 +5,13 @@ import AsyncSelect from "react-select/async";
 import { sins } from "../data/sins";
 import commandments from "../data/commandments";
 
+import "./selector.css";
+
 interface ISelectorProps {}
 
 const Selector: React.FunctionComponent<ISelectorProps> = props => {
   const [inputValue, setInputValue] = useState();
-  const [commandment, setCommandment] = useState();
+  const [commandment, setCommandment] = useState<Commandment | null>();
 
   const filterOptions = (inputValue: string) => {
     return sins;
@@ -49,6 +51,7 @@ const Selector: React.FunctionComponent<ISelectorProps> = props => {
         value={inputValue}
         onChange={handleOnChange}
         isClearable
+        placeholder="Ej. mentir"
       />
       {inputValue && (
         <div
@@ -58,9 +61,17 @@ const Selector: React.FunctionComponent<ISelectorProps> = props => {
         >
           <p>
             Has roto el mandamiento: <b>{commandment?.commandment}</b>, por
-            tanto, la consecuencia la encontrarás en <b>{commandment?.verse}</b>
+            tanto, la consecuencia la encontrarás en{" "}
+            <b>{commandment?.verse.join(" y ")}</b>
           </p>
-          <div dangerouslySetInnerHTML={{ __html: commandment?.text }} />
+          {commandment?.text.map((text, index) => (
+            <>
+              <div dangerouslySetInnerHTML={{ __html: text }} />
+              {index < commandment?.text.length - 1 &&
+                <div className="divider div-transparent div-arrow-down"></div>
+              }
+            </>
+          ))}
         </div>
       )}
     </>

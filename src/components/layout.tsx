@@ -8,8 +8,8 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
-import Header from "./header";
-import "./layout.css";
+import Banner from './banner';
+import Header from './header';
 
 interface Props {
   children?: any;
@@ -29,7 +29,8 @@ const Layout = ({ children }: Props) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.description} />
+      <Banner />
+      {/* <Header siteTitle={data.site.siteMetadata.description} /> */}
       <div
         style={{
           margin: `0 auto`,

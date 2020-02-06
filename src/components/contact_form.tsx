@@ -1,16 +1,20 @@
 import * as React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import "./contact_form.css";
 
 interface IContactFormProps {}
 
 const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
   return (
-    <div className="mt-5">
+    <div className="contact-form">
       <h3>Contacta al autor</h3>
       <Formik
         initialValues={{
-          nombre: "", mensaje: "", email: "", "form-name": "Contacte al Autor",
+          nombre: "",
+          mensaje: "",
+          email: "",
+          "form-name": "Contacte al Autor",
         }}
         validationSchema={Yup.object({
           nombre: Yup.string()
@@ -57,7 +61,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
             <ErrorMessage name="mensaje" />
           </div>
           <div data-netlify-recaptcha="true"></div>
-          <button type="submit" className="btn btn-dark">
+          <button type="submit" className="btn btn-baruc">
             Enviar
           </button>
         </Form>
