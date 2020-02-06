@@ -3,7 +3,13 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./contact_form.css";
 
-interface IContactFormProps {}
+interface IContactFormProps { }
+
+function encode(data: any) {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&')
+}
 
 const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
   return (
@@ -28,10 +34,16 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
             .required("Requerido"),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encode({
+              'form-name': 'formik',
+              ...values,
+            }),
+          })
+            //.then(succ => navigate('/thanks'))
+            .catch(error => console.log(error))
         }}
       >
         <Form
