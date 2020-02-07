@@ -20,7 +20,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
           nombre: "",
           mensaje: "",
           email: "",
-          "form-name": "Contacte al Autor",
+          "form-name": "contacto",
         }}
         validationSchema={Yup.object({
           nombre: Yup.string()
@@ -47,12 +47,12 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
         }}
       >
         <Form
-          name="contact"
+          name="contacto"
           method="post"
           data-netlify="true"
           data-netlify-recaptcha="true"
         >
-          <input type="hidden" name="form-name" value="Contacte al Autor" />
+          <input type="hidden" name="form-name" value="contacto" />
           <div className="form-group">
             <label htmlFor="nombre">Nombre completo:</label>
             <Field name="nombre" type="text" className="form-control" />
@@ -78,6 +78,11 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
           </button>
         </Form>
       </Formik>
+      <form data-netlify="true" hidden name="contacto" data-netlify-recaptcha="true">
+        <input type="text" name="nombre" />
+        <input type="email" name="email" />
+        <input type="textarea" name="mensaje" />
+      </form>
     </div>
   );
 };
