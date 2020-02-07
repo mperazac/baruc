@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState} from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./contact_form.css";
@@ -12,6 +12,9 @@ function encode(data: any) {
 }
 
 const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
+  const [isMessageSent, setIsMessageSent] = useState(false);
+  const [error, setError] = useState(false);
+
   return (
     <div className="contact-form">
       <h3>Contacta al autor</h3>
@@ -21,6 +24,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
           mensaje: "",
           email: "",
           "form-name": "contacto",
+          "bot-field": "",
         }}
         validationSchema={Yup.object({
           nombre: Yup.string()
@@ -33,7 +37,9 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
             .email("Dirección de correo electrónico no válida")
             .required("Requerido"),
         })}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          setIsMessageSent(false);
+          setError(false);
           fetch('/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -42,17 +48,22 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
               ...values,
             }),
           })
-            //.then(succ => navigate('/thanks'))
-            .catch(error => console.log(error))
+            .then(succ => {
+              setIsMessageSent(true);
+              resetForm({});
+              //navigate('/thanks')
+            })
+            .catch(error => setError(true))
         }}
       >
         <Form
           name="contacto"
           method="post"
           data-netlify="true"
-          data-netlify-recaptcha="true"
+          netlify-honeypot="bot-field"
         >
-          <input type="hidden" name="form-name" value="contacto" />
+          <Field type="hidden" name="form-name" />
+          <Field type="hidden" name="bot-field" />
           <div className="form-group">
             <label htmlFor="nombre">Nombre completo:</label>
             <Field name="nombre" type="text" className="form-control" />
@@ -72,17 +83,13 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = props => {
             />
             <ErrorMessage name="mensaje" />
           </div>
-          <div data-netlify-recaptcha="true"></div>
           <button type="submit" className="btn btn-baruc">
             Enviar
           </button>
         </Form>
       </Formik>
-      <form data-netlify="true" hidden name="contacto" data-netlify-recaptcha="true">
-        <input type="text" name="nombre" />
-        <input type="email" name="email" />
-        <input type="textarea" name="mensaje" />
-      </form>
+      {isMessageSent && <p>¡Mensaje enviado exitósamente!</p>}
+      {error && <p>Ocurrió un error al intentar enviar el mensaje. Por favor, intentelo de nuevo.</p>}
     </div>
   );
 };
